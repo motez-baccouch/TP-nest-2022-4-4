@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CvService } from 'src/cv/cv.service';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Cv } from 'src/cv/entities/cv.entity';
 import { Repository } from 'typeorm';
 import { CreateSkillDto } from './dto/create-skill.dto';
@@ -9,8 +9,10 @@ import { Skill } from './entities/skill.entity';
 @Injectable()
 export class SkillService {
   constructor(
+    @InjectRepository(Skill)
     private readonly skillrepository: Repository<Skill>,
-    private readonly cvRepository: Repository<Cv>
+    @InjectRepository(Cv)
+    private readonly cvRepository: Repository<Cv>,
   ) {}
 
   async create(createSkillDto: CreateSkillDto) {
